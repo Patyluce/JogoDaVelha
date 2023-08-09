@@ -1,49 +1,47 @@
 const listaLi = document.querySelectorAll('.box .itens');
-const mensagem = document.querySelector('.vencedor')
-let jogador = "X"
+const mensagem = document.querySelector('.vencedor');
+let jogador = "X";
+let finalizar = false;
 
-listaLi.forEach((li,i) => {
+listaLi.forEach((li, i) => {
   li.addEventListener("click", function () {
-    
-    if(li.innerHTML === "") {
+    if (finalizar || li.innerHTML !== "") {
+      return;
+    }
+
     li.innerHTML = jogador;
 
     li.style.color = jogador === "X" ? "red" : "blue";
     li.style.fontSize = "50px";
-    li.style.fontFamily = " 'Montserrat', sans-serif ,Open Sans"
-    li.style.backgroundColor = " rgb(143, 247, 143)"
-    atualizarBlocos(i,jogador)
+    li.style.fontFamily = "'Montserrat', sans-serif, Open Sans";
+    li.style.backgroundColor = "rgb(143, 247, 143)";
+    atualizarBlocos(i, jogador);
     jogador = jogador === "X" ? "O" : "X";
-    vencedor()
-    }
-   
+    vencedor();
   });
 });
 
-const bt = document.querySelector('.bt input')
-bt.addEventListener("click" , function(){
-listaLi.forEach(( listaLi,i) => {
-
-  
-  listaLi.innerHTML = ""
-  listaLi.style.backgroundColor = ""
-  atualizarBlocos(i,"")
-  mensagem.innerHTML=""
-})
-}
-)
+const bt = document.querySelector('.bt input');
+bt.addEventListener("click", function () {
+  listaLi.forEach((listaLi, i) => {
+    listaLi.innerHTML = "";
+    listaLi.style.backgroundColor = "";
+    atualizarBlocos(i, "");
+    mensagem.innerHTML = "";
+    finalizar = false; // Reseta a variável ao reiniciar o jogo
+  });
+});
 
 let blocos = [
-  [''] , [''] , [''],
-  [''] , [''] , [''],
-  [''] , [''],  ['']
+  ['', '', ''],
+  ['', '', ''],
+  ['', '', '']
+];
 
-]
-function atualizarBlocos(i , valor){
-
- const linha = Math.floor( i / 3)
- const coluna = i % 3
- blocos [linha] [coluna] = valor
+function atualizarBlocos(i, valor) {
+  const linha = Math.floor(i / 3);
+  const coluna = i % 3;
+  blocos[linha][coluna] = valor;
 }
 function vencedor(){
 
@@ -69,15 +67,22 @@ function vencedor(){
     ) {
       setTimeout(() => {
        mensagem.innerHTML = `${ blocos[a[0]][a[1]]} --- ganhou!\u{1F603} 	\u{1F389}`
+       finalizar=true
+        
        if(blocos[a[0]][a[1]] === "X")(
          mensagem.style.color="red"
+         
        )
        else{
         mensagem.style.color = "blue"
        }
       }, 300);
+      break
     }
   }
   }
+
+
+
 
 
