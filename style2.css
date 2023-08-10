@@ -69,12 +69,7 @@ color:rgb(143, 247, 143);
     background-color: rgb(143, 247, 143);
   
 }
-.winning-line {
-    position: absolute;
-    pointer-events: none;
-    border: none;
-    z-index: 1;
-}
+
 .vencedor{
 
     font-size: xx-large;
