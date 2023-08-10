@@ -2,6 +2,8 @@ const listaLi = document.querySelectorAll('.box .itens');
 const mensagem = document.querySelector('.vencedor');
 let jogador = "X";
 let finalizar = false;
+let jogadas = 0
+
 
 listaLi.forEach((li, i) => {
   li.addEventListener("click", function () {
@@ -18,9 +20,25 @@ listaLi.forEach((li, i) => {
     atualizarBlocos(i, jogador);
     jogador = jogador === "X" ? "O" : "X";
     vencedor();
+    jogadas++
+    if(jogador === "X"){
+      mensagem.innerHTML = `Vez do jogador  <span style="color: red;">X</span>`
+      mensagem.style.color= "black"
+      
+      
+    }
+    if(jogador === "O"){
+      mensagem.innerHTML = 'Vez do jogador  <span style="color: blue;">O</span>'
+      mensagem.style.color= "black"
+    }
+    if (jogadas === 9) {
+      mensagem.innerHTML = "Empate!";
+      mensagem.style.color= "black"
+    }
   });
 });
 
+//reiniciar partida
 const bt = document.querySelector('.bt input');
 bt.addEventListener("click", function () {
   listaLi.forEach((listaLi, i) => {
@@ -28,6 +46,7 @@ bt.addEventListener("click", function () {
     listaLi.style.backgroundColor = "";
     atualizarBlocos(i, "");
     mensagem.innerHTML = "";
+    jogadas = 0
     finalizar = false; // Reseta a variável ao reiniciar o jogo
   });
 });
@@ -43,6 +62,8 @@ function atualizarBlocos(i, valor) {
   const coluna = i % 3;
   blocos[linha][coluna] = valor;
 }
+
+//verificar o vencedor da partida
 function vencedor(){
 
   const combinacaoes = [
@@ -69,6 +90,7 @@ function vencedor(){
        mensagem.innerHTML = `${ blocos[a[0]][a[1]]} --- ganhou!\u{1F603} 	\u{1F389}`
        finalizar=true
         
+      
        if(blocos[a[0]][a[1]] === "X")(
          mensagem.style.color="red"
          
@@ -77,10 +99,14 @@ function vencedor(){
         mensagem.style.color = "blue"
        }
       }, 300);
+      
       break
     }
   }
   }
+
+
+
 
 
 
